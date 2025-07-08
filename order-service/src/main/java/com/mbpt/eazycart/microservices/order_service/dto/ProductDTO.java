@@ -4,16 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-import java.util.List;
+import java.math.BigDecimal;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderDTO {
+public class ProductDTO {
     private Integer id;
-    private Date orderDate;
-    private String ownerName;
-    private String address;
-    private List<Integer> productIds;
+    private String name;
+    private String description;
+    private BigDecimal price;
+    private Integer stock;
 }

@@ -20,9 +20,6 @@ public class OrderEntity {
     @Column(name = "order_id")
     private Integer orderId;
 
-    @Column(name = "total_amount")
-    private Double totalAmount;
-
     @Column(name = "order_date")
     private Date orderDate;
 
@@ -31,5 +28,12 @@ public class OrderEntity {
 
     @Column(name = "address")
     private String address;
+
+    @ManyToMany
+    @JoinTable(name = "order_product",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
+    private List<ProductEntity> products;
 
 }
