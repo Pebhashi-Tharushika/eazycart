@@ -28,7 +28,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDTO findOrderById(Integer id) {
-        OrderEntity foundUserEntity = orderRepository.findById(id).orElseThrow(() -> new RuntimeException("user not found"));
+        OrderEntity foundUserEntity = orderRepository.findById(id).orElseThrow(() -> new RuntimeException("order not found"));
         return orderMapper.toDto(foundUserEntity);
     }
 
@@ -42,7 +42,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderDTO updateOrder(OrderDTO orderDTO) {
         OrderEntity orderEntity = orderMapper.toEntity(orderDTO);
-        OrderEntity foundOrderEntity = orderRepository.findById(orderDTO.getId()).orElseThrow(() -> new RuntimeException("user not found"));
+        OrderEntity foundOrderEntity = orderRepository.findById(orderDTO.getId()).orElseThrow(() -> new RuntimeException("order not found"));
         foundOrderEntity.setOrderDate(orderEntity.getOrderDate());
         foundOrderEntity.setOwnerName(orderEntity.getOwnerName());
         foundOrderEntity.setAddress(orderEntity.getAddress());
@@ -53,8 +53,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDTO deleteOrder(Integer id) {
-        OrderEntity foundOrderEntity = orderRepository.findById(id).orElseThrow(() -> new RuntimeException("user not found"));
+        OrderEntity foundOrderEntity = orderRepository.findById(id).orElseThrow(() -> new RuntimeException("order not found"));
+        OrderDTO deletedOrder = orderMapper.toDto(foundOrderEntity);
         orderRepository.deleteById(id);
-        return orderMapper.toDto(foundOrderEntity);
+        return deletedOrder;
     }
 }

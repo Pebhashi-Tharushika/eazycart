@@ -48,7 +48,7 @@ public class OrderController {
 
     }
 
-    @PutMapping(value = "/{id}")
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity<OrderDTO> deleteOrder(@PathVariable Integer id) {
         OrderDTO deletedOrder = orderService.deleteOrder(id);
         if(Objects.isNull(deletedOrder))

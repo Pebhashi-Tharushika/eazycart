@@ -53,7 +53,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDTO deleteProduct(Integer id) {
         ProductEntity foundProduct = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
+        ProductDTO deletedProduct = mapper.convertValue(foundProduct, ProductDTO.class);
         productRepository.deleteById(id);
-        return mapper.convertValue(foundProduct, ProductDTO.class);
+        return deletedProduct;
     }
 }
