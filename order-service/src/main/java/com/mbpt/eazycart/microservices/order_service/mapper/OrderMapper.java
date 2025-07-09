@@ -3,7 +3,7 @@ package com.mbpt.eazycart.microservices.order_service.mapper;
 import com.mbpt.eazycart.microservices.order_service.dto.OrderDTO;
 import com.mbpt.eazycart.microservices.order_service.entity.OrderEntity;
 import com.mbpt.eazycart.microservices.order_service.entity.ProductEntity;
-import com.mbpt.eazycart.microservices.order_service.repository.ProductRepository;
+import com.mbpt.eazycart.microservices.order_service.util.ProductClient;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public abstract class OrderMapper {
 
     @Autowired
-    protected ProductRepository productRepository;
+    private ProductClient productClient;
 
     // DTO to Entity mapping
     @Mapping(source = "id", target = "orderId")
@@ -30,8 +30,7 @@ public abstract class OrderMapper {
     protected List<ProductEntity> getProducts(List<Integer> productIds) {
         if (productIds == null) return null;
         return productIds.stream()
-                .map(id -> productRepository.findById(id)
-                        .orElseThrow(() -> new RuntimeException("Product not found: " + id)))
+                .map(productClient::findProductById)
                 .collect(Collectors.toList());
     }
 
