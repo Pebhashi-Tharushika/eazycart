@@ -10,8 +10,10 @@ import com.mbpt.eazycart.microservices.order_service.mapper.OrderMapper;
 import com.mbpt.eazycart.microservices.order_service.mapper.ProductMapper;
 import com.mbpt.eazycart.microservices.order_service.repository.OrderRepository;
 import com.mbpt.eazycart.microservices.order_service.service.OrderService;
+import com.mbpt.eazycart.microservices.order_service.util.InterServiceCommunicationHandler;
 import com.mbpt.eazycart.microservices.order_service.util.ProductClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +36,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private ProductClient productClient;
+
 
     @Override
     public OrderDTO getFinalizeOrder(OrderDTO orderDTO) {
