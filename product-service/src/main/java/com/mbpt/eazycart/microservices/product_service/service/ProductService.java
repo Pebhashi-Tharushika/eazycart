@@ -7,7 +7,7 @@ import java.util.List;
 
 @Service
 public interface ProductService {
-     List<ProductDTO> findAllProducts();
+    List<ProductDTO> findAllProducts();
 
     ProductDTO findProductById(Integer id);
 

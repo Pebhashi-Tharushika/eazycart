@@ -18,14 +18,14 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO) {
-        if(Objects.isNull(productDTO))
+        if (Objects.isNull(productDTO))
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         ProductDTO createdProduct = productService.createProduct(productDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);
     }
 
     @GetMapping(value = "/all")
-    public ResponseEntity<List<ProductDTO>> findAllProduct(){
+    public ResponseEntity<List<ProductDTO>> findAllProduct() {
         List<ProductDTO> allProducts = productService.findAllProducts();
         return ResponseEntity.status(HttpStatus.OK).body(allProducts);
     }
@@ -33,25 +33,17 @@ public class ProductController {
     @GetMapping(value = "/{id}")
     public ResponseEntity<ProductDTO> findProductById(@PathVariable Integer id) {
         ProductDTO foundProduct = productService.findProductById(id);
-        if(Objects.isNull(foundProduct))
+        if (Objects.isNull(foundProduct))
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         return ResponseEntity.status(HttpStatus.OK).body(foundProduct);
     }
 
     @PutMapping
     public ResponseEntity<ProductDTO> updateProduct(@RequestBody ProductDTO productDTO) {
-        if(Objects.isNull(productDTO) || Objects.isNull(productDTO.getId()))
+        if (Objects.isNull(productDTO) || Objects.isNull(productDTO.getId()))
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         ProductDTO updatedProduct = productService.updateProduct(productDTO);
         return ResponseEntity.status(HttpStatus.OK).body(updatedProduct);
 
-    }
-
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<ProductDTO> deleteProduct(@PathVariable Integer id) {
-        ProductDTO deletedProduct = productService.deleteProduct(id);
-        if(Objects.isNull(deletedProduct))
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        return ResponseEntity.status(HttpStatus.OK).body(deletedProduct);
     }
 }
