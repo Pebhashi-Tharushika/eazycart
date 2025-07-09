@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -91,7 +92,7 @@ public class OrderServiceImpl implements OrderService {
         List<ProductEntity> productEntities = orderDTO.getProductIds().stream().map(id -> {
             ProductDTO productDTO = productClient.findProductById(id);
             return productMapper.toEntity(productDTO);
-        }).toList();
+        }).collect(Collectors.toCollection(ArrayList::new));
         orderEntity.setProducts(productEntities);
 
         OrderEntity savedOrderEntity = orderRepository.save(orderEntity);
@@ -120,7 +121,7 @@ public class OrderServiceImpl implements OrderService {
         List<ProductEntity> productEntities = orderDTO.getProductIds().stream().map(id -> {
             ProductDTO productDTO = productClient.findProductById(id);
             return productMapper.toEntity(productDTO);
-        }).toList();
+        }).collect(Collectors.toCollection(ArrayList::new));
         updatedOrderEntity.setProducts(productEntities);
 
         foundOrderEntity.setOrderDate(updatedOrderEntity.getOrderDate());

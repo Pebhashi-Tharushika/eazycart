@@ -12,8 +12,4 @@ public class ProductServiceApplication {
 		SpringApplication.run(ProductServiceApplication.class, args);
 	}
 
-	@Bean
-	public ObjectMapper objectMapper(){
-		return new ObjectMapper();
-	}
 }
