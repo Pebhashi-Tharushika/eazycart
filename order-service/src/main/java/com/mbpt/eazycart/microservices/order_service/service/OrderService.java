@@ -8,8 +8,6 @@ import java.util.List;
 @Service
 public interface OrderService {
 
-    OrderDTO getFinalizeOrder(OrderDTO orderDTO);
-
     List<OrderDTO> findAllOrders();
 
     OrderDTO findOrderById(Integer id);

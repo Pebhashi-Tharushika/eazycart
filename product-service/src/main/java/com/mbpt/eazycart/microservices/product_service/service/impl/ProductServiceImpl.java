@@ -5,6 +5,7 @@ import com.mbpt.eazycart.microservices.product_service.dto.ProductDTO;
 import com.mbpt.eazycart.microservices.product_service.entity.ProductEntity;
 import com.mbpt.eazycart.microservices.product_service.repository.ProductRepository;
 import com.mbpt.eazycart.microservices.product_service.service.ProductService;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     ObjectMapper mapper;
+
+    @Autowired
+    private AmqpTemplate amqpTemplate;
+
+    public void sendMessage(String message) {
+        amqpTemplate.convertAndSend("message-queue", message);
+    }
 
     @Override
     public List<ProductDTO> findAllProducts() {

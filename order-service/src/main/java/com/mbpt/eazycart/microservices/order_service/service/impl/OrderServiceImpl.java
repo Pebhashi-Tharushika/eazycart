@@ -11,6 +11,7 @@ import com.mbpt.eazycart.microservices.order_service.mapper.ProductMapper;
 import com.mbpt.eazycart.microservices.order_service.repository.OrderRepository;
 import com.mbpt.eazycart.microservices.order_service.service.OrderService;
 import com.mbpt.eazycart.microservices.order_service.util.ProductClient;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,13 +36,9 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private ProductClient productClient;
 
-    @Override
-    public OrderDTO getFinalizeOrder(OrderDTO orderDTO) {
-        List<ProductDTO> productDTOList = productClient.getAllProducts();
-        if (isAllOrderItemExists(orderDTO, productDTOList)) {
-            return orderDTO;
-        }
-        return null;
+    @RabbitListener(queues = "message-queue")
+    public void receiveMessage(String message) {
+        System.out.println("Received message: " + message);
     }
 
     private boolean isAllOrderItemExists(OrderDTO orderDTO, List<ProductDTO> productDTOList) {

@@ -16,6 +16,12 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    @GetMapping(value = "/send/{message}")
+    public String sendMessage(@PathVariable("message") String message){
+        productService.sendMessage(message);
+        return message;
+    }
+
     @PostMapping
     public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO) {
         if (Objects.isNull(productDTO))
