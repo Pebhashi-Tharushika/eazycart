@@ -25,33 +25,17 @@ public class ProductClient {
     private InterServiceCommunicationHandler interServiceCommunicationHandler;
 
     public List<ProductDTO> getAllProducts() {
-        final ResponseEntity<List<ProductDTO>> response = interServiceCommunicationHandler
+        final  List<ProductDTO> response = interServiceCommunicationHandler
                 .interServiceCallByWebClient(productServiceUrl + "/all", new ParameterizedTypeReference<List<ProductDTO>>() {
                 });
-        if (response.getStatusCode().value() == 200) {
-            return response.getBody();
-        } else {
-            String errorMessage = String.format("Product service returned status %d for /all. Response: %s", response.getStatusCode().value(), response.getBody());
-            logger.error(errorMessage);
-            throw new ProductServiceException(errorMessage);
-        }
+        return response;
     }
 
     public ProductDTO findProductById(Integer product_id) {
-        ResponseEntity<ProductDTO> response = interServiceCommunicationHandler
+       final ProductDTO response = interServiceCommunicationHandler
                 .interServiceCallByWebClient(productServiceUrl + "/" + product_id, new ParameterizedTypeReference<ProductDTO>() {
                 });
-        if (response.getStatusCode().value() == 200) {
-            return response.getBody();
-        } else if (response.getStatusCode().value() == 404) {
-            String errorMessage = String.format("Product not found (status %d) for ID %d. Response: %s", response.getStatusCode().value(), product_id, response.getBody());
-            logger.error(errorMessage);
-            throw new InvalidOrderItemsException(errorMessage);
-        } else {
-            String errorMessage = String.format("Product service returned status %d for ID %d. Response: %s", response.getStatusCode().value(), product_id, response.getBody());
-            logger.error(errorMessage);
-            throw new ProductServiceException(errorMessage);
-        }
+        return response;
     }
 
 }
